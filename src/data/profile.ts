@@ -34,6 +34,8 @@ export const profile = {
   email: 'hazemmrk12@gmail.com',
   phoneDisplay: '+216 22 907 082',
   phoneHref: 'tel:+21622907082',
+  github: 'https://github.com/HazemMarrakchi',
+  linkedin: 'https://www.linkedin.com/in/hazem-marrakchi/',
   location: { en: 'Gabès, Tunisia', fr: 'Gabès, Tunisie' },
   role: { en: 'Software Engineer', fr: 'Ingénieur en Génie Logiciel' },
   tagline: { en: 'Full Stack Developer', fr: 'Développeur Full Stack' },
