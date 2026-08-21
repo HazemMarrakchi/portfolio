@@ -1,6 +1,6 @@
 # Hazem Marrakchi — Portfolio 🚀
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-vercel.app-22d3ee?style=for-the-badge&logo=vercel)](https://hazem-portfolio.vercel.app)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-vercel.app-22d3ee?style=for-the-badge&logo=vercel)](https://portfolio-swart-pi-efwv7wn6oo.vercel.app)
 [![React](https://img.shields.io/badge/React-19-61dafb?style=flat-square&logo=react)](https://react.dev)
 [![Three.js](https://img.shields.io/badge/Three.js-r185-white?style=flat-square&logo=threedotjs)](https://threejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-7-3178c6?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
