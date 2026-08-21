@@ -247,6 +247,12 @@ export const profile = {
       degree: { en: "Bachelor's in Business Computing", fr: 'Licence en Informatique de Gestion' },
       school: { en: 'ESSAT Gabès, Tunisia', fr: 'ESSAT Gabès, Tunisie' },
     },
+    {
+      id: 'baccalaureate',
+      period: '2018',
+      degree: { en: 'Baccalauréat in Economics & Management', fr: 'Baccalauréat Économie & Gestion' },
+      school: { en: 'Gabès, Tunisia', fr: 'Gabès, Tunisie' },
+    },
   ] as EducationItem[],
   certifications: [
     { en: 'Full Stack & Front End Development — LinkedIn Learning', fr: 'Full Stack & Front End Development — LinkedIn Learning' },
