@@ -11,6 +11,7 @@ export interface Project {
   stack: string[]
   highlight?: Localized
   link?: string
+  demo?: string
 }
 
 export interface ExperienceItem {
@@ -99,6 +100,7 @@ export const profile = {
         fr: 'Certification ZeTheta à la fin du programme',
       },
       link: 'https://github.com/HazemMarrakchi/loan-application',
+      demo: 'https://hazemmarrakchi.github.io/loan-application/',
     },
     {
       id: 'hospital-platform',

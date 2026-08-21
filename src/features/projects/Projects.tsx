@@ -3,6 +3,17 @@ import { profile } from '../../data/profile'
 import { Reveal, SectionHeading } from '../../components/ui'
 import { logger } from '../../core/logger'
 
+function RocketIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="h-3.5 w-3.5">
+      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+      <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+      <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+      <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+    </svg>
+  )
+}
+
 function GitHubIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-3.5 w-3.5">
@@ -55,17 +66,33 @@ export default function Projects() {
                       </li>
                     ))}
                   </ul>
-                  {project.link && (
-                    <a
-                      href={project.link}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={() => logger.info('project repo opened', { id: project.id })}
-                      className="text-accent mt-4 inline-flex items-center gap-2 rounded-full border border-accent/30 px-3.5 py-1.5 text-xs font-semibold transition-all duration-300 hover:border-accent/70 hover:bg-accent/10"
-                    >
-                      <GitHubIcon />
-                      {L({ en: 'View source', fr: 'Voir le code' })}
-                    </a>
+                  {(project.demo || project.link) && (
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {project.demo && (
+                        <a
+                          href={project.demo}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={() => logger.info('project demo opened', { id: project.id })}
+                          className="bg-accent inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-bold text-slate-950 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/30"
+                        >
+                          <RocketIcon />
+                          {L({ en: 'Live demo', fr: 'Démo live' })}
+                        </a>
+                      )}
+                      {project.link && (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={() => logger.info('project repo opened', { id: project.id })}
+                          className="text-accent inline-flex items-center gap-2 rounded-full border border-accent/30 px-3.5 py-1.5 text-xs font-semibold transition-all duration-300 hover:border-accent/70 hover:bg-accent/10"
+                        >
+                          <GitHubIcon />
+                          {L({ en: 'View source', fr: 'Voir le code' })}
+                        </a>
+                      )}
+                    </div>
                   )}
                 </div>
               </article>
