@@ -66,11 +66,11 @@ export const profile = {
     },
     {
       label: { en: 'Backend & APIs', fr: 'Backend & APIs' },
-      items: ['Node.js', 'Express.js', 'Spring Boot', 'FastAPI', 'REST APIs', 'WebSockets', '.NET'],
+      items: ['Node.js', 'NestJS', 'Express.js', 'Spring Boot', 'FastAPI', 'REST APIs', 'WebSockets', '.NET'],
     },
     {
-      label: { en: 'Databases', fr: 'Bases de données' },
-      items: ['MongoDB', 'MySQL', 'Oracle Database'],
+      label: { en: 'Databases & Validation', fr: 'Bases de données & Validation' },
+      items: ['MongoDB', 'MySQL', 'Oracle Database', 'SQLite', 'Zod'],
     },
     {
       label: { en: 'AI & Machine Learning', fr: 'IA & Machine Learning' },
@@ -79,6 +79,10 @@ export const profile = {
     {
       label: { en: 'Cloud & DevOps', fr: 'Cloud & DevOps' },
       items: ['Docker', 'Microsoft Azure', 'Linux'],
+    },
+    {
+      label: { en: 'Testing & Quality', fr: 'Tests & Qualité' },
+      items: ['Playwright E2E', 'CI/CD (GitHub Actions)', 'OpenAPI / Swagger'],
     },
     {
       label: { en: 'Tools & Methods', fr: 'Outils & Méthodes' },
@@ -91,8 +95,8 @@ export const profile = {
       name: 'Facturia — EU-Compliant E-Invoicing SaaS',
       kind: { en: 'Full-Stack SaaS — EN 16931 · Peppol BIS', fr: 'SaaS Full-Stack — EN 16931 · Peppol BIS' },
       description: {
-        en: 'A production-grade e-invoicing platform emitting EN 16931-compliant UBL 2.1 documents (Peppol BIS Billing 3.0 & XRechnung CIUS): multi-organization workspaces with role-based access, invoice lifecycle (draft → sent → accepted/refused → paid), per-org sequential numbering, client directory, immutable GDPR audit trail with self-service data export & deletion, and an AI copilot over invoice data. NestJS REST API with OpenAPI/Swagger, React dashboard, Zod contracts shared across a pnpm-style monorepo, 6 Playwright E2E tests running against a real server, Docker images and full CI/CD (GitHub Actions + Render).',
-        fr: "Une plateforme d'e-facturation conforme EN 16931 émettant des documents UBL 2.1 (Peppol BIS Billing 3.0 & XRechnung) : espaces multi-organisations avec rôles, cycle de vie complet des factures (brouillon → envoyée → acceptée/refusée → payée), numérotation séquentielle par organisation, répertoire clients, piste d'audit RGPD immuable avec export et suppression des données, et un copilote IA sur les données de facturation. API REST NestJS avec Swagger, tableau de bord React, contrats Zod partagés en monorepo, 6 tests E2E Playwright contre un vrai serveur, images Docker et CI/CD complet (GitHub Actions + Render).",
+        en: 'A production-grade e-invoicing platform emitting EN 16931-compliant UBL 2.1 documents (Peppol BIS Billing 3.0 & XRechnung CIUS): multi-organization workspaces with role-based access, invoice lifecycle (draft → sent → accepted/refused → paid), per-org sequential numbering, client directory, immutable GDPR audit trail with self-service data export & deletion, and an AI copilot over invoice data. NestJS REST API with OpenAPI/Swagger, React dashboard, Zod contracts shared across a monorepo, 8 Playwright E2E tests running against a real server, Docker images and full CI/CD (GitHub Actions + Render).',
+        fr: "Une plateforme d'e-facturation conforme EN 16931 émettant des documents UBL 2.1 (Peppol BIS Billing 3.0 & XRechnung) : espaces multi-organisations avec rôles, cycle de vie complet des factures (brouillon → envoyée → acceptée/refusée → payée), numérotation séquentielle par organisation, répertoire clients, piste d'audit RGPD immuable avec export et suppression des données, et un copilote IA sur les données de facturation. API REST NestJS avec Swagger, tableau de bord React, contrats Zod partagés en monorepo, 8 tests E2E Playwright contre un vrai serveur, images Docker et CI/CD complet (GitHub Actions + Render).",
       },
       stack: ['NestJS', 'React 19', 'TypeScript', 'Drizzle ORM', 'SQLite', 'Zod', 'Tailwind CSS v4', 'Playwright', 'Docker', 'GitHub Actions', 'Render'],
       highlight: {
