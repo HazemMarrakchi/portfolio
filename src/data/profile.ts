@@ -107,6 +107,22 @@ export const profile = {
       demo: 'https://hazemmarrakchi.github.io/facturia/',
     },
     {
+      id: 'einvoice-studio',
+      name: 'eInvoice Studio — EN 16931 Validator Playground',
+      kind: { en: 'Open Developer Tool — EU e-Invoicing', fr: 'Outil Développeur — E-facturation EU' },
+      description: {
+        en: 'A free online playground validating UBL 2.1 / Peppol BIS invoices against EN 16931 business rules: paste any document and get instant rule-level diagnostics (BR-*, BR-CO-*) with plain-language explanations and concrete fix hints, plus a visual structure explorer of parties, totals and lines. Namespace-agnostic parser and pure-TypeScript rule engine running 100% in the browser — no server, invoices never leave the machine — with Vitest unit tests gating deploys in CI.',
+        fr: "Un bac à sable en ligne gratuit validant les factures UBL 2.1 / Peppol BIS contre les règles métier EN 16931 : collez un document et obtenez un diagnostic instantané règle par règle (BR-*, BR-CO-*) avec explications et corrections concrètes, plus un explorateur visuel de la structure. Parseur agnostique aux espaces de noms et moteur de règles TypeScript pur, 100% navigateur — aucune donnée transmise — tests unitaires Vitest bloquant le déploiement en CI.",
+      },
+      stack: ['React 19', 'TypeScript', 'Vite', 'Tailwind CSS v4', 'Vitest', 'GitHub Pages'],
+      highlight: {
+        en: 'Live ahead of the September 2026 French e-invoicing mandate',
+        fr: "En ligne avant la bascule e-facturation française de septembre 2026",
+      },
+      link: 'https://github.com/HazemMarrakchi/einvoice-studio',
+      demo: 'https://hazemmarrakchi.github.io/einvoice-studio/',
+    },
+    {
       id: 'dhahabi-loan-platform',
       name: 'Dhahabi — Loan Application Platform',
       kind: { en: 'ZeTheta Program — Fintech Project', fr: 'Programme ZeTheta — Projet Fintech' },
