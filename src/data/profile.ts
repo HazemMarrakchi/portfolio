@@ -10,6 +10,7 @@ export interface Project {
   description: Localized
   stack: string[]
   highlight?: Localized
+  link?: string
 }
 
 export interface ExperienceItem {
@@ -84,6 +85,17 @@ export const profile = {
     },
   ],
   projects: [
+    {
+      id: 'dhahabi-loan-platform',
+      name: 'Dhahabi — Loan Application Platform',
+      kind: { en: 'Personal Project — Fintech', fr: 'Projet Personnel — Fintech' },
+      description: {
+        en: 'A production-grade 9-step loan application wizard for the Tunisian market: real-time validation, conditional fields per loan type, client-side document compression, e-signature capture, auto-save with resume and an instant pre-approval engine (40% repayment rule). Fully covered by 8 end-to-end Playwright tests.',
+        fr: "Un parcours de demande de crédit en 9 étapes pour le marché tunisien : validation temps réel, champs conditionnels selon le type de prêt, compression des documents côté client, signature électronique, sauvegarde automatique avec reprise et moteur de pré-approbation instantanée (règle des 40 %). Entièrement couvert par 8 tests E2E Playwright.",
+      },
+      stack: ['React 19', 'TypeScript', 'Vite', 'Tailwind CSS v4', 'React Hook Form', 'Zod', 'Playwright'],
+      link: 'https://github.com/HazemMarrakchi/loan-application',
+    },
     {
       id: 'hospital-platform',
       name: 'Intelligent Hospital Management Platform',
