@@ -87,6 +87,22 @@ export const profile = {
   ],
   projects: [
     {
+      id: 'facturia',
+      name: 'Facturia — EU-Compliant E-Invoicing SaaS',
+      kind: { en: 'Full-Stack SaaS — EN 16931 · Peppol BIS', fr: 'SaaS Full-Stack — EN 16931 · Peppol BIS' },
+      description: {
+        en: 'A production-grade e-invoicing platform emitting EN 16931-compliant UBL 2.1 documents (Peppol BIS Billing 3.0 & XRechnung CIUS): multi-organization workspaces with role-based access, invoice lifecycle (draft → sent → accepted/refused → paid), per-org sequential numbering, client directory, immutable GDPR audit trail with self-service data export & deletion, and an AI copilot over invoice data. NestJS REST API with OpenAPI/Swagger, React dashboard, Zod contracts shared across a pnpm-style monorepo, 6 Playwright E2E tests running against a real server, Docker images and full CI/CD (GitHub Actions + Render).',
+        fr: "Une plateforme d'e-facturation conforme EN 16931 émettant des documents UBL 2.1 (Peppol BIS Billing 3.0 & XRechnung) : espaces multi-organisations avec rôles, cycle de vie complet des factures (brouillon → envoyée → acceptée/refusée → payée), numérotation séquentielle par organisation, répertoire clients, piste d'audit RGPD immuable avec export et suppression des données, et un copilote IA sur les données de facturation. API REST NestJS avec Swagger, tableau de bord React, contrats Zod partagés en monorepo, 6 tests E2E Playwright contre un vrai serveur, images Docker et CI/CD complet (GitHub Actions + Render).",
+      },
+      stack: ['NestJS', 'React 19', 'TypeScript', 'Drizzle ORM', 'SQLite', 'Zod', 'Tailwind CSS v4', 'Playwright', 'Docker', 'GitHub Actions', 'Render'],
+      highlight: {
+        en: 'Live in production — frontend on GitHub Pages, real REST API deployed on Render',
+        fr: 'En ligne en production — frontend sur GitHub Pages, vraie API REST déployée sur Render',
+      },
+      link: 'https://github.com/HazemMarrakchi/facturia',
+      demo: 'https://hazemmarrakchi.github.io/facturia/',
+    },
+    {
       id: 'dhahabi-loan-platform',
       name: 'Dhahabi — Loan Application Platform',
       kind: { en: 'ZeTheta Program — Fintech Project', fr: 'Programme ZeTheta — Projet Fintech' },
