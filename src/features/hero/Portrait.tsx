@@ -45,7 +45,7 @@ export default function Portrait() {
         <div className="from-accent to-violet relative rounded-[2rem] bg-gradient-to-br p-[3px] shadow-2xl shadow-accent/15">
           <div className="relative overflow-hidden rounded-[calc(2rem-3px)]">
             <img
-              src="/hazemphoto.jpeg"
+              src={`${import.meta.env.BASE_URL}hazemphoto.jpeg`}
               alt={profile.name}
               className="aspect-[4/5] w-full object-cover contrast-[1.04] saturate-[1.06]"
             />
