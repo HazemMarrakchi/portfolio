@@ -25,7 +25,7 @@ export default function Experience() {
                       <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                         <h3 className="font-display text-lg font-bold text-frost">
                           {L(item.role)}
-                          <span className="text-mist font-normal"> · {item.org}</span>
+                          <span className="text-mist font-normal"> · {L(item.org)}</span>
                         </h3>
                         <span className="text-accent font-mono text-xs">{L(item.period)}</span>
                       </div>

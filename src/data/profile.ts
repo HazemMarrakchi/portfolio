@@ -17,7 +17,7 @@ export interface Project {
 export interface ExperienceItem {
   id: string
   role: Localized
-  org: string
+  org: Localized
   period: Localized
   points: Localized[]
 }
@@ -138,7 +138,7 @@ export const profile = {
     {
       id: 'digilife',
       role: { en: 'Software Engineering Intern', fr: 'Stagiaire Ingénieur Informatique' },
-      org: 'Digilife',
+      org: { en: 'Digilife', fr: 'Digilife' },
       period: { en: 'Feb 2026 – Jun 2026', fr: 'Fév. 2026 – Juin 2026' },
       points: [
         {
@@ -158,7 +158,7 @@ export const profile = {
     {
       id: 'telecom-2025',
       role: { en: 'Software Engineering Intern', fr: 'Stagiaire Ingénieur Informatique' },
-      org: 'Telecom Company',
+      org: { en: 'Telecom Company', fr: 'Opérateur Télécom' },
       period: { en: 'Jun 2025 – Jul 2025', fr: 'Juin 2025 – Juil. 2025' },
       points: [
         {
@@ -178,7 +178,7 @@ export const profile = {
     {
       id: 'telecom-2024',
       role: { en: 'Software Engineering Intern', fr: 'Stagiaire Ingénieur Informatique' },
-      org: 'Telecom Company',
+      org: { en: 'Telecom Company', fr: 'Opérateur Télécom' },
       period: { en: 'Jun 2024 – Jul 2024', fr: 'Juin 2024 – Juil. 2024' },
       points: [
         {
@@ -198,7 +198,7 @@ export const profile = {
     {
       id: 'steg',
       role: { en: 'IT Intern', fr: 'Stagiaire Informatique' },
-      org: 'STEG',
+      org: { en: 'STEG', fr: 'STEG' },
       period: { en: 'Jun 2022 – Jul 2022', fr: 'Juin 2022 – Juil. 2022' },
       points: [
         {
@@ -214,7 +214,7 @@ export const profile = {
     {
       id: 'sta-freelance',
       role: { en: 'Freelance Web Developer', fr: 'Développeur Web (Freelance)' },
-      org: 'Sana Travel Agency (STA)',
+      org: { en: 'Sana Travel Agency (STA)', fr: 'Agence de Voyage Sana (STA)' },
       period: { en: 'Apr 2018 – Oct 2020', fr: 'Avril 2018 – Oct. 2020' },
       points: [
         {
@@ -261,10 +261,10 @@ export const profile = {
     { en: 'Deep Learning Foundation', fr: 'Deep Learning Foundation' },
   ] as Localized[],
   languagesSpoken: [
-    { name: 'Arabic', level: { en: 'Native', fr: 'Langue maternelle' } },
-    { name: 'French', level: { en: 'Professional', fr: 'Professionnel' } },
-    { name: 'English', level: { en: 'Professional', fr: 'Professionnel' } },
-    { name: 'German', level: { en: 'Beginner (A1)', fr: 'Notions (A1)' } },
+    { name: { en: 'Arabic', fr: 'Arabe' }, level: { en: 'Native', fr: 'Langue maternelle' } },
+    { name: { en: 'French', fr: 'Français' }, level: { en: 'Professional', fr: 'Professionnel' } },
+    { name: { en: 'English', fr: 'Anglais' }, level: { en: 'Professional', fr: 'Professionnel' } },
+    { name: { en: 'German', fr: 'Allemand' }, level: { en: 'Beginner (A1)', fr: 'Notions (A1)' } },
   ],
 } as const
 

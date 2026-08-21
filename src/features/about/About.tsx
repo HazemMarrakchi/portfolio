@@ -50,8 +50,8 @@ export default function About() {
               <p className="text-accent mt-1 text-sm">{L(profile.role)}</p>
               <ul className="mt-6 w-full space-y-2 border-t border-line pt-5">
                 {profile.languagesSpoken.map((spoken) => (
-                  <li key={spoken.name} className="flex items-center justify-between text-sm">
-                    <span className="text-frost font-medium">{spoken.name}</span>
+                  <li key={spoken.name.en} className="flex items-center justify-between text-sm">
+                    <span className="text-frost font-medium">{L(spoken.name)}</span>
                     <span className="text-mist">{L(spoken.level)}</span>
                   </li>
                 ))}
