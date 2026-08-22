@@ -37,6 +37,13 @@ export default function Hero() {
               {t.hero.viewProjects}
             </a>
             <a
+              href={`${import.meta.env.BASE_URL}CV_Hazem_Marrakchi_FR.pdf`}
+              download="CV_Hazem_Marrakchi_FR.pdf"
+              className="glass font-display hover:border-accent/60 rounded-full px-7 py-3.5 text-sm font-semibold text-frost transition-colors duration-300"
+            >
+              ⬇ {t.hero.downloadCv}
+            </a>
+            <a
               href="#contact"
               className="glass font-display hover:border-accent/60 rounded-full px-7 py-3.5 text-sm font-semibold text-frost transition-colors duration-300"
             >
