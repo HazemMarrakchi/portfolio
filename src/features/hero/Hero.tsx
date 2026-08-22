@@ -3,7 +3,7 @@ import { profile } from '../../data/profile'
 import Portrait from './Portrait'
 
 export default function Hero() {
-  const { t, L } = useI18n()
+  const { t, L, lang } = useI18n()
 
   return (
     <section id="hero" className="relative flex min-h-screen items-center">
@@ -37,8 +37,8 @@ export default function Hero() {
               {t.hero.viewProjects}
             </a>
             <a
-              href={`${import.meta.env.BASE_URL}CV_Hazem_Marrakchi_FR.pdf`}
-              download="CV_Hazem_Marrakchi_FR.pdf"
+              href={`${import.meta.env.BASE_URL}CV_Hazem_Marrakchi_${lang.toUpperCase()}.pdf`}
+              download={`CV_Hazem_Marrakchi_${lang.toUpperCase()}.pdf`}
               className="glass font-display hover:border-accent/60 rounded-full px-7 py-3.5 text-sm font-semibold text-frost transition-colors duration-300"
             >
               ⬇ {t.hero.downloadCv}
