@@ -151,8 +151,8 @@ export const profile = {
         en: '34 E2E tests · 136 unit tests · ZeTheta certification',
         fr: '34 tests E2E · 136 tests unitaires · Certification ZeTheta',
       },
-      link: 'https://github.com/HazemMarrakchi/loan-application',
-      demo: 'https://hazemmarrakchi.github.io/loan-application/',
+      link: 'https://github.com/ZethetaIntern/loan-application-23',
+      demo: 'https://zethetaintern.github.io/loan-application-23/',
     },
     {
       id: 'hospital-platform',
