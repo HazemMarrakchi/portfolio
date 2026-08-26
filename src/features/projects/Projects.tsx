@@ -172,6 +172,18 @@ export default function Projects() {
 
       <Reveal delay={120}>
         <div className="relative">
+          {/* Swipe hint */}
+          {totalPages > 1 && page === 0 && (
+            <div className="pointer-events-none mb-6 flex items-center justify-center gap-2">
+              <span className="text-mist text-sm">
+                {L({ en: 'Swipe to discover more projects', fr: 'Glissez pour découvrir plus de projets' })}
+              </span>
+              <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" className="h-4 w-4 text-accent animate-pulse">
+                <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
+              </svg>
+            </div>
+          )}
+
           {/* Gradient fades */}
           <div className="from-void pointer-events-none absolute top-0 left-0 z-10 h-full w-8 bg-gradient-to-r to-transparent md:w-16" />
           <div className="from-void pointer-events-none absolute top-0 right-0 z-10 h-full w-8 bg-gradient-to-l to-transparent md:w-16" />
