@@ -51,8 +51,8 @@ export const profile = {
       fr: "Diplômé en Génie Logiciel de l'ESSAT Gabès (programme accrédité EUR-ACE®), je suis spécialisé dans la conception et le développement d'applications web Full Stack modernes et l'intégration de solutions d'intelligence artificielle.",
     },
     {
-      en: 'My daily toolkit spans the JavaScript/TypeScript ecosystem (Angular, Node.js), Java with Spring Boot and Python with FastAPI. I have hands-on experience modelling service-oriented architectures, building secure REST APIs and managing SQL/NoSQL databases.',
-      fr: "Mon quotidien tourne autour de l'écosystème JavaScript/TypeScript (Angular, Node.js), de Java avec Spring Boot et de Python avec FastAPI. J'ai une expérience concrète en modélisation d'architectures orientées services, création d'APIs REST sécurisées et gestion de bases de données SQL/NoSQL.",
+      en: 'My toolkit spans JavaScript/TypeScript (React, Angular, NestJS, Vite), Python (FastAPI, Scikit-learn) and Java (Spring Boot). I build production-grade platforms with multi-step form wizards, real-time APIs, Trilingual i18n (EN/FR/AR+RTL), E2E testing (Cypress/Playwright), CI/CD and containerized deployments.',
+      fr: "Ma boîte à outils couvre JavaScript/TypeScript (React, Angular, NestJS, Vite), Python (FastAPI, Scikit-learn) et Java (Spring Boot). Je construis des plateformes de production avec formulaires multi-étapes, APIs en temps réel, i18n trilingue (EN/FR/AR+RTL), tests E2E (Cypress/Playwright), CI/CD et déploiements conteneurisés.",
     },
   ] as Localized[],
   skillGroups: [
@@ -62,15 +62,15 @@ export const profile = {
     },
     {
       label: { en: 'Frontend', fr: 'Frontend' },
-      items: ['Angular', 'React', 'Tailwind CSS', 'Bootstrap', 'HTML5 / CSS3'],
+      items: ['React', 'Angular', 'Three.js', 'Tailwind CSS v4', 'Bootstrap', 'HTML5 / CSS3'],
     },
     {
       label: { en: 'Backend & APIs', fr: 'Backend & APIs' },
       items: ['Node.js', 'NestJS', 'Express.js', 'Spring Boot', 'FastAPI', 'REST APIs', 'WebSockets', '.NET'],
     },
     {
-      label: { en: 'Databases & Validation', fr: 'Bases de données & Validation' },
-      items: ['MongoDB', 'MySQL', 'Oracle Database', 'SQLite', 'Zod'],
+      label: { en: 'Databases & ORM', fr: 'Bases de données & ORM' },
+      items: ['MongoDB', 'MySQL', 'Oracle Database', 'SQLite', 'Drizzle ORM', 'Zod'],
     },
     {
       label: { en: 'AI & Machine Learning', fr: 'IA & Machine Learning' },
@@ -82,7 +82,7 @@ export const profile = {
     },
     {
       label: { en: 'Testing & Quality', fr: 'Tests & Qualité' },
-      items: ['Playwright E2E', 'CI/CD (GitHub Actions)', 'OpenAPI / Swagger'],
+      items: ['Cypress E2E', 'Playwright E2E', 'CI/CD (GitHub Actions)', 'OpenAPI / Swagger'],
     },
     {
       label: { en: 'Tools & Methods', fr: 'Outils & Méthodes' },
@@ -123,30 +123,46 @@ export const profile = {
       demo: 'https://hazemmarrakchi.github.io/einvoice-studio/',
     },
     {
-      id: 'dhahabi-loan-platform',
-      name: 'Dhahabi — Loan Application Platform',
-      kind: { en: 'ZeTheta Program — Fintech Project', fr: 'Programme ZeTheta — Projet Fintech' },
+      id: 'sana-travel',
+      name: 'SANA Travel — Trilingual Travel Agency Platform',
+      kind: { en: 'Full-Stack Production — FR / EN / AR + RTL', fr: 'Full-Stack Production — FR / EN / AR + RTL' },
       description: {
-        en: 'A production-grade 9-step loan application wizard for the Tunisian market: real-time validation, conditional fields per loan type, client-side document compression, e-signature capture, auto-save with resume and an instant pre-approval engine (40% repayment rule). Fully covered by 8 end-to-end Playwright tests.',
-        fr: "Un parcours de demande de crédit en 9 étapes pour le marché tunisien : validation temps réel, champs conditionnels selon le type de prêt, compression des documents côté client, signature électronique, sauvegarde automatique avec reprise et moteur de pré-approbation instantanée (règle des 40 %). Entièrement couvert par 8 tests E2E Playwright.",
+        en: 'A production-grade trilingual (French / English / Arabic with full RTL support) travel agency platform: organized tours catalog, hotel search with cascading country→city filters, real-time flight search (Amadeus API), custom trip builder, AI concierge chatbot, newsletter subscriptions, user authentication with JWT, and a NestJS REST API backed by MongoDB Atlas. Live in production with real API deployed on Render.',
+        fr: "Une plateforme d'agence de voyage trilingue (français / anglais / arabe avec support RTL complet) en production : catalogue de voyages organisés, recherche d'hôtels avec filtres cascade pays→villes, recherche de vols en temps réel (API Amadeus), constructeur de voyage sur mesure, chatbot concierge IA, inscriptions newsletter, authentification utilisateur JWT, et une API REST NestJS avec MongoDB Atlas. En production avec API déployée sur Render.",
       },
-      stack: ['React 19', 'TypeScript', 'Vite', 'Tailwind CSS v4', 'React Hook Form', 'Zod', 'Playwright'],
+      stack: ['React 19', 'TypeScript', 'Vite', 'NestJS', 'MongoDB Atlas', 'Tailwind CSS v4', 'JWT', 'Amadeus API'],
       highlight: {
-        en: 'ZeTheta certification on program completion',
-        fr: 'Certification ZeTheta à la fin du programme',
+        en: 'Live in production — Frontend on GitHub Pages, API on Render',
+        fr: 'En production — Frontend sur GitHub Pages, API sur Render',
+      },
+      link: 'https://github.com/HazemMarrakchi/sana-travel',
+      demo: 'https://hazemmarrakchi.github.io/sana-travel/',
+    },
+    {
+      id: 'dhahabi-loan-platform',
+      name: 'LendSwift — Online Loan Application',
+      kind: { en: 'ZeTheta Program — Fintech Platform', fr: 'Programme ZeTheta — Plateforme Fintech' },
+      description: {
+        en: 'A premium multi-step loan application wizard (Indian market spec): 8-step flow with real-time Zod validation, conditional co-applicant logic, KYC verification with simulated OTP, INR-formatted EMI breakdown, client-side document compression, e-signature pad, encrypted auto-save (AES-256-GCM) with resume, and a 34-test Cypress E2E suite. Premium fintech UI with emerald/gold design system.',
+        fr: "Un parcours de demande de crédit premium en 8 étapes (spec marché indien) : validation Zod temps réel, logique co-applicant conditionnelle, vérification KYC avec OTP simulé, tableau d'amortissement INR, compression des documents côté client, pad de signature, sauvegarde chiffrée AES-256-GCM avec reprise, et 34 tests E2E Cypress. Interface fintech premium avec système de design émeraude/or.",
+      },
+      stack: ['React 19', 'TypeScript', 'Vite 8', 'Tailwind CSS v4', 'React Hook Form', 'Zod 4', 'Cypress'],
+      highlight: {
+        en: '34 E2E tests · 136 unit tests · ZeTheta certification',
+        fr: '34 tests E2E · 136 tests unitaires · Certification ZeTheta',
       },
       link: 'https://github.com/HazemMarrakchi/loan-application',
       demo: 'https://hazemmarrakchi.github.io/loan-application/',
     },
     {
       id: 'hospital-platform',
-      name: 'Intelligent Hospital Management Platform',
-      kind: { en: "Final Year Project — Digilife", fr: "Projet de Fin d'Études — Digilife" },
+      name: 'MedAI Pro — Intelligent Patient Monitoring',
+      kind: { en: "Final Year Project — Digilife · ML-Powered", fr: "Projet de Fin d'Études — Digilife · IA" },
       description: {
-        en: 'A smart hospital management platform with AI-based prediction features: real-time coordination between services via WebSockets and secured access with JWT.',
-        fr: "Une plateforme intelligente de gestion hospitalière avec prédictions basées sur l'IA : coordination temps réel entre services via WebSockets et accès sécurisé par JWT.",
+        en: 'A professional-grade hospital platform for patient monitoring with ML-powered clinical risk prediction: real-time vital signs tracking (BP, HR, SpO2, Temperature), AI predictions (readmission, deterioration, length-of-stay, bed assignment), role-based dashboards, WebSocket alerts, JWT authentication, QR-code patient access and document management.',
+        fr: "Une plateforme hospitalière professionnelle de monitoring patient avec prédictions cliniques par ML : suivi des signes vitaux en temps réel (PA, FC, SpO2, Température), prédictions IA (réadmission, détérioration, durée de séjour, attribution de lit), tableaux de bord par rôle, alertes WebSocket, authentification JWT, accès patient par QR-code et gestion de documents.",
       },
-      stack: ['Angular', 'Node.js', 'Express.js', 'FastAPI', 'MongoDB', 'JWT', 'WebSockets'],
+      stack: ['Angular 17', 'Node.js', 'Express.js', 'FastAPI', 'Python', 'Scikit-learn', 'MongoDB', 'WebSockets', 'JWT'],
       highlight: { en: 'Graduated with 18.5/20 — High Honors', fr: 'Noté 18,5/20 — Mention Très Bien' },
     },
     {
