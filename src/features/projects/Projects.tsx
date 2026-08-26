@@ -39,42 +39,10 @@ function ChevronRight() {
   )
 }
 
-function ProjectLinks({ project }: { project: typeof profile.projects[number] }) {
-  const { L } = useI18n()
-  return (
-    <div className="mt-4 flex flex-wrap gap-2">
-      {project.demo && (
-        <a
-          href={project.demo}
-          target="_blank"
-          rel="noreferrer"
-          onClick={() => logger.info('project demo opened', { id: project.id })}
-          className="bg-accent inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-bold text-slate-950 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/30"
-        >
-          <RocketIcon />
-          {L({ en: 'Live demo', fr: 'Démo live' })}
-        </a>
-      )}
-      {project.link && (
-        <a
-          href={project.link}
-          target="_blank"
-          rel="noreferrer"
-          onClick={() => logger.info('project repo opened', { id: project.id })}
-          className="text-accent inline-flex items-center gap-2 rounded-full border border-accent/30 px-3.5 py-1.5 text-xs font-semibold transition-all duration-300 hover:border-accent/70 hover:bg-accent/10"
-        >
-          <GitHubIcon />
-          {L({ en: 'View source', fr: 'Voir le code' })}
-        </a>
-      )}
-    </div>
-  )
-}
-
 function ProjectCard({ project, index }: { project: typeof profile.projects[number]; index: number }) {
   const { L } = useI18n()
   return (
-    <article className="glass group hover:glow-ring flex h-full w-full flex-col rounded-3xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/50">
+    <article className="glass group hover:glow-ring flex h-full flex-col rounded-3xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/50">
       <div className="mb-3 flex items-center gap-3">
         <span className="text-accent flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-sm font-bold">
           {index + 1}
@@ -86,7 +54,7 @@ function ProjectCard({ project, index }: { project: typeof profile.projects[numb
       <h3 className="font-display group-hover:text-accent text-lg leading-snug font-bold text-frost transition-colors duration-300">
         {project.name}
       </h3>
-      <p className="text-mist mt-2.5 flex-1 text-sm leading-relaxed line-clamp-3">
+      <p className="text-mist mt-2.5 flex-1 text-sm leading-relaxed">
         {L(project.description)}
       </p>
 
@@ -98,7 +66,7 @@ function ProjectCard({ project, index }: { project: typeof profile.projects[numb
 
       <div className="border-line mt-4 border-t pt-3">
         <ul className="mb-3 flex flex-wrap gap-1">
-          {project.stack.slice(0, 5).map((tech) => (
+          {project.stack.map((tech) => (
             <li
               key={tech}
               className="rounded bg-white/[0.04] px-1.5 py-0.5 font-mono text-[10px] text-accent"
@@ -106,73 +74,92 @@ function ProjectCard({ project, index }: { project: typeof profile.projects[numb
               {tech}
             </li>
           ))}
-          {project.stack.length > 5 && (
-            <li className="rounded bg-white/[0.04] px-1.5 py-0.5 font-mono text-[10px] text-mist">
-              +{project.stack.length - 5}
-            </li>
-          )}
         </ul>
-        <ProjectLinks project={project} />
+        <div className="flex flex-wrap gap-2">
+          {project.demo && (
+            <a
+              href={project.demo}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => logger.info('project demo opened', { id: project.id })}
+              className="bg-accent inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-bold text-slate-950 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-accent/30"
+            >
+              <RocketIcon />
+              {L({ en: 'Live demo', fr: 'Démo live' })}
+            </a>
+          )}
+          {project.link && (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => logger.info('project repo opened', { id: project.id })}
+              className="text-accent inline-flex items-center gap-2 rounded-full border border-accent/30 px-3.5 py-1.5 text-xs font-semibold transition-all duration-300 hover:border-accent/70 hover:bg-accent/10"
+            >
+              <GitHubIcon />
+              {L({ en: 'View source', fr: 'Voir le code' })}
+            </a>
+          )}
+        </div>
       </div>
     </article>
   )
 }
 
+const PAGE_SIZE = 6
+
 export default function Projects() {
   const { t, L } = useI18n()
-  const scrollRef = useRef<HTMLDivElement>(null)
+  const trackRef = useRef<HTMLDivElement>(null)
   const isDragging = useRef(false)
   const startX = useRef(0)
-  const scrollLeftPos = useRef(0)
-  const [activePage, setActivePage] = useState(0)
+  const scrollStart = useRef(0)
+  const [page, setPage] = useState(0)
 
   const projects = profile.projects
-  const CARD_WIDTH = 380
-  const GAP = 24
-  const PAGE_SIZE = 6
+  const pages: (typeof profile.projects[number] | null)[][] = []
+  for (let i = 0; i < projects.length; i += PAGE_SIZE) {
+    const slice = projects.slice(i, i + PAGE_SIZE)
+    while (slice.length < PAGE_SIZE) slice.push(null as never)
+    pages.push(slice)
+  }
+  const totalPages = pages.length
 
-  const totalPages = Math.ceil(projects.length / PAGE_SIZE)
-
-  const scrollToPage = useCallback((page: number) => {
-    if (!scrollRef.current) return
-    const clamped = Math.max(0, Math.min(page, totalPages - 1))
-    setActivePage(clamped)
-    scrollRef.current.scrollTo({
-      left: clamped * PAGE_SIZE * (CARD_WIDTH + GAP),
-      behavior: 'smooth',
-    })
+  const goTo = useCallback((p: number) => {
+    const clamped = Math.max(0, Math.min(p, totalPages - 1))
+    setPage(clamped)
+    trackRef.current?.scrollTo({ left: clamped * trackRef.current.clientWidth, behavior: 'smooth' })
   }, [totalPages])
 
   useEffect(() => {
-    const el = scrollRef.current
+    const el = trackRef.current
     if (!el) return
     const onScroll = () => {
-      const page = Math.round(el.scrollLeft / (PAGE_SIZE * (CARD_WIDTH + GAP)))
-      setActivePage(Math.max(0, Math.min(page, totalPages - 1)))
+      const p = Math.round(el.scrollLeft / el.clientWidth)
+      setPage(Math.max(0, Math.min(p, totalPages - 1)))
     }
     el.addEventListener('scroll', onScroll, { passive: true })
     return () => el.removeEventListener('scroll', onScroll)
   }, [totalPages])
 
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    if (!scrollRef.current) return
+  const onDown = useCallback((e: React.MouseEvent) => {
+    if (!trackRef.current) return
     isDragging.current = true
-    startX.current = e.pageX - scrollRef.current.offsetLeft
-    scrollLeftPos.current = scrollRef.current.scrollLeft
-    scrollRef.current.style.cursor = 'grabbing'
+    startX.current = e.pageX
+    scrollStart.current = trackRef.current.scrollLeft
+    trackRef.current.style.cursor = 'grabbing'
   }, [])
 
-  const handleMouseUp = useCallback(() => {
+  const onUp = useCallback(() => {
     isDragging.current = false
-    if (scrollRef.current) scrollRef.current.style.cursor = 'grab'
+    if (trackRef.current) trackRef.current.style.cursor = 'grab'
   }, [])
 
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!isDragging.current || !scrollRef.current) return
+  const onMove = useCallback((e: React.MouseEvent) => {
+    if (!isDragging.current || !trackRef.current) return
     e.preventDefault()
-    const x = e.pageX - scrollRef.current.offsetLeft
-    const walk = (x - startX.current) * 1.5
-    scrollRef.current.scrollLeft = scrollLeftPos.current - walk
+    const dx = e.pageX - startX.current
+    trackRef.current.scrollLeft = scrollStart.current - dx
   }, [])
 
   return (
@@ -183,43 +170,42 @@ export default function Projects() {
         </Reveal>
       </div>
 
-      {/* ── Carousel (full-bleed) ─────────────────────── */}
       <Reveal delay={120}>
-        <div className="relative mt-10">
+        <div className="relative">
           {/* Gradient fades */}
-          <div className="from-void pointer-events-none absolute top-0 left-0 z-10 h-full w-16 bg-gradient-to-r to-transparent md:w-24" />
-          <div className="from-void pointer-events-none absolute top-0 right-0 z-10 h-full w-16 bg-gradient-to-l to-transparent md:w-24" />
+          <div className="from-void pointer-events-none absolute top-0 left-0 z-10 h-full w-8 bg-gradient-to-r to-transparent md:w-16" />
+          <div className="from-void pointer-events-none absolute top-0 right-0 z-10 h-full w-8 bg-gradient-to-l to-transparent md:w-16" />
 
-          {/* Nav arrows */}
-          {activePage > 0 && (
+          {/* Arrows */}
+          {page > 0 && (
             <button
               type="button"
-              onClick={() => scrollToPage(activePage - 1)}
-              aria-label={L({ en: 'Previous projects', fr: 'Projets précédents' })}
-              className="border-line bg-panel/80 hover:bg-accent/20 pointer-events-auto absolute top-1/2 left-3 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border backdrop-blur-sm transition-all duration-200 hover:border-accent/50 md:left-6"
+              onClick={() => goTo(page - 1)}
+              aria-label={L({ en: 'Previous', fr: 'Précédent' })}
+              className="border-line bg-panel/80 hover:bg-accent/20 pointer-events-auto absolute top-1/2 left-2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border backdrop-blur-sm transition-all duration-200 hover:border-accent/50 md:left-4"
             >
               <ChevronLeft />
             </button>
           )}
-          {activePage < totalPages - 1 && (
+          {page < totalPages - 1 && (
             <button
               type="button"
-              onClick={() => scrollToPage(activePage + 1)}
-              aria-label={L({ en: 'Next projects', fr: 'Projets suivants' })}
-              className="border-line bg-panel/80 hover:bg-accent/20 pointer-events-auto absolute top-1/2 right-3 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border backdrop-blur-sm transition-all duration-200 hover:border-accent/50 md:right-6"
+              onClick={() => goTo(page + 1)}
+              aria-label={L({ en: 'Next', fr: 'Suivant' })}
+              className="border-line bg-panel/80 hover:bg-accent/20 pointer-events-auto absolute top-1/2 right-2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border backdrop-blur-sm transition-all duration-200 hover:border-accent/50 md:right-4"
             >
               <ChevronRight />
             </button>
           )}
 
-          {/* Scrollable track */}
+          {/* Pages track — each page is a full-width 3×2 grid */}
           <div
-            ref={scrollRef}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
-            onMouseMove={handleMouseMove}
-            className="flex gap-6 overflow-x-auto px-6 py-2 md:px-24"
+            ref={trackRef}
+            onMouseDown={onDown}
+            onMouseUp={onUp}
+            onMouseLeave={onUp}
+            onMouseMove={onMove}
+            className="flex overflow-x-auto"
             style={{
               scrollSnapType: 'x mandatory',
               scrollBehavior: 'smooth',
@@ -227,12 +213,24 @@ export default function Projects() {
               WebkitOverflowScrolling: 'touch',
             }}
           >
-            {projects.map((project, i) => (
+            {pages.map((pageProjects, pi) => (
               <div
-                key={project.id}
-                className="w-[calc((100vw-12rem)/3-1rem)] min-w-[280px] shrink-0 snap-start md:w-[calc((min(100vw,72rem)-12rem)/3-1rem)]"
+                key={pi}
+                className="w-full shrink-0 snap-start px-6 md:px-16 lg:px-24"
               >
-                <ProjectCard project={project} index={i} />
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {pageProjects.map((project, ci) =>
+                    project ? (
+                      <ProjectCard
+                        key={project.id}
+                        project={project}
+                        index={pi * PAGE_SIZE + ci}
+                      />
+                    ) : (
+                      <div key={`empty-${ci}`} />
+                    ),
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -240,14 +238,14 @@ export default function Projects() {
           {/* Page dots */}
           {totalPages > 1 && (
             <div className="mt-6 flex justify-center gap-2">
-              {Array.from({ length: totalPages }).map((_, i) => (
+              {pages.map((_, i) => (
                 <button
                   key={i}
                   type="button"
-                  onClick={() => scrollToPage(i)}
+                  onClick={() => goTo(i)}
                   aria-label={`${L({ en: 'Page', fr: 'Page' })} ${i + 1}`}
                   className={`h-2 rounded-full transition-all duration-300 ${
-                    i === activePage
+                    i === page
                       ? 'w-8 bg-accent'
                       : 'w-2 bg-white/20 hover:bg-white/40'
                   }`}
