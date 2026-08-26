@@ -39,10 +39,18 @@ function ChevronRight() {
   )
 }
 
+function SwipeArrow() {
+  return (
+    <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" className="h-4 w-4 text-accent">
+      <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
+    </svg>
+  )
+}
+
 function ProjectCard({ project, index }: { project: typeof profile.projects[number]; index: number }) {
   const { L } = useI18n()
   return (
-    <article className="glass group hover:glow-ring flex h-full flex-col rounded-3xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/50">
+    <article className="glass group hover:glow-ring flex h-full flex-col rounded-3xl p-5 sm:p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/50">
       <div className="mb-3 flex items-center gap-3">
         <span className="text-accent flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-sm font-bold">
           {index + 1}
@@ -51,10 +59,10 @@ function ProjectCard({ project, index }: { project: typeof profile.projects[numb
           {L(project.kind)}
         </span>
       </div>
-      <h3 className="font-display group-hover:text-accent text-lg leading-snug font-bold text-frost transition-colors duration-300">
+      <h3 className="font-display group-hover:text-accent text-base sm:text-lg leading-snug font-bold text-frost transition-colors duration-300">
         {project.name}
       </h3>
-      <p className="text-mist mt-2.5 flex-1 text-sm leading-relaxed">
+      <p className="text-mist mt-2 flex-1 text-sm leading-relaxed">
         {L(project.description)}
       </p>
 
@@ -115,6 +123,15 @@ export default function Projects() {
   const startX = useRef(0)
   const scrollStart = useRef(0)
   const [page, setPage] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)')
+    setIsMobile(mq.matches)
+    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches)
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
 
   const projects = profile.projects
   const pages: (typeof profile.projects[number] | null)[][] = []
@@ -163,8 +180,8 @@ export default function Projects() {
   }, [])
 
   return (
-    <section id="projects" className="relative py-28">
-      <div className="mx-auto max-w-6xl px-6 lg:px-10">
+    <section id="projects" className="relative py-20 sm:py-28">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-10">
         <Reveal>
           <SectionHeading index="03" title={t.projects.title} subtitle={t.projects.subtitle} />
         </Reveal>
@@ -172,24 +189,25 @@ export default function Projects() {
 
       <Reveal delay={120}>
         <div className="relative">
-          {/* Swipe hint */}
+          {/* Swipe hint — visible on first page only */}
           {totalPages > 1 && page === 0 && (
-            <div className="pointer-events-none mb-6 flex items-center justify-center gap-2">
-              <span className="text-mist text-sm">
+            <div className="pointer-events-none mb-4 sm:mb-6 flex items-center justify-center gap-2 px-4">
+              <span className="text-mist text-xs sm:text-sm">
                 {L({ en: 'Swipe to discover more projects', fr: 'Glissez pour découvrir plus de projets' })}
               </span>
-              <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" className="h-4 w-4 text-accent animate-pulse">
-                <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
-              </svg>
+              <span className="flex">
+                <SwipeArrow />
+                <SwipeArrow />
+              </span>
             </div>
           )}
 
           {/* Gradient fades */}
-          <div className="from-void pointer-events-none absolute top-0 left-0 z-10 h-full w-8 bg-gradient-to-r to-transparent md:w-16" />
-          <div className="from-void pointer-events-none absolute top-0 right-0 z-10 h-full w-8 bg-gradient-to-l to-transparent md:w-16" />
+          <div className="from-void pointer-events-none absolute top-0 left-0 z-10 h-full w-4 bg-gradient-to-r to-transparent sm:w-12 md:w-16" />
+          <div className="from-void pointer-events-none absolute top-0 right-0 z-10 h-full w-4 bg-gradient-to-l to-transparent sm:w-12 md:w-16" />
 
-          {/* Arrows */}
-          {page > 0 && (
+          {/* Arrows — desktop only */}
+          {!isMobile && page > 0 && (
             <button
               type="button"
               onClick={() => goTo(page - 1)}
@@ -199,7 +217,7 @@ export default function Projects() {
               <ChevronLeft />
             </button>
           )}
-          {page < totalPages - 1 && (
+          {!isMobile && page < totalPages - 1 && (
             <button
               type="button"
               onClick={() => goTo(page + 1)}
@@ -210,7 +228,7 @@ export default function Projects() {
             </button>
           )}
 
-          {/* Pages track — each page is a full-width 3×2 grid */}
+          {/* Pages track */}
           <div
             ref={trackRef}
             onMouseDown={onDown}
@@ -221,16 +239,16 @@ export default function Projects() {
             style={{
               scrollSnapType: 'x mandatory',
               scrollBehavior: 'smooth',
-              cursor: 'grab',
+              cursor: isMobile ? 'auto' : 'grab',
               WebkitOverflowScrolling: 'touch',
             }}
           >
             {pages.map((pageProjects, pi) => (
               <div
                 key={pi}
-                className="w-full shrink-0 snap-start px-6 md:px-16 lg:px-24"
+                className="w-full shrink-0 snap-start px-4 sm:px-6 md:px-12 lg:px-20"
               >
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
                   {pageProjects.map((project, ci) =>
                     project ? (
                       <ProjectCard
@@ -239,7 +257,7 @@ export default function Projects() {
                         index={pi * PAGE_SIZE + ci}
                       />
                     ) : (
-                      <div key={`empty-${ci}`} />
+                      <div key={`empty-${ci}`} className="hidden sm:block" />
                     ),
                   )}
                 </div>
@@ -249,7 +267,7 @@ export default function Projects() {
 
           {/* Page dots */}
           {totalPages > 1 && (
-            <div className="mt-6 flex justify-center gap-2">
+            <div className="mt-5 flex items-center justify-center gap-3">
               {pages.map((_, i) => (
                 <button
                   key={i}
@@ -264,6 +282,13 @@ export default function Projects() {
                 />
               ))}
             </div>
+          )}
+
+          {/* Mobile swipe hint below dots */}
+          {isMobile && totalPages > 1 && page < totalPages - 1 && (
+            <p className="mt-3 text-center text-xs text-mist/60">
+              {L({ en: '← Swipe left for more →', fr: '← Glissez à gauche pour plus →' })}
+            </p>
           )}
         </div>
       </Reveal>
