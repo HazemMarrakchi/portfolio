@@ -1,3 +1,4 @@
+import { useRef, useCallback } from 'react'
 import { useI18n } from '../../core/i18n'
 import { profile } from '../../data/profile'
 import { Reveal, SectionHeading } from '../../components/ui'
@@ -22,10 +23,10 @@ function GitHubIcon() {
   )
 }
 
-function ArrowRightIcon() {
+function ChevronRight({ className = '' }: { className?: string }) {
   return (
-    <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" className="h-4 w-4">
-      <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
+    <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" className={`h-5 w-5 ${className}`}>
+      <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
     </svg>
   )
 }
@@ -109,54 +110,84 @@ function FeaturedCard({ project, delay }: { project: typeof profile.projects[num
   )
 }
 
-function ScrollCard({ project, delay }: { project: typeof profile.projects[number]; delay: number }) {
+function CarouselCard({ project }: { project: typeof profile.projects[number] }) {
   const { L } = useI18n()
   return (
-    <Reveal delay={delay}>
-      <article className="glass group hover:glow-ring flex h-full w-[340px] min-w-[340px] flex-col rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/50">
-        <span className="text-violet mb-3 text-xs font-semibold tracking-wider uppercase">
-          {L(project.kind)}
-        </span>
-        <h3 className="font-display group-hover:text-accent text-lg leading-snug font-bold text-frost transition-colors duration-300">
-          {project.name}
-        </h3>
-        <p className="text-mist mt-2.5 flex-1 text-sm leading-relaxed line-clamp-3">
-          {L(project.description)}
+    <article className="glass group hover:glow-ring flex h-full w-[380px] min-w-[380px] flex-col rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/50">
+      <span className="text-violet mb-3 text-xs font-semibold tracking-wider uppercase">
+        {L(project.kind)}
+      </span>
+      <h3 className="font-display group-hover:text-accent text-lg leading-snug font-bold text-frost transition-colors duration-300">
+        {project.name}
+      </h3>
+      <p className="text-mist mt-2.5 flex-1 text-sm leading-relaxed line-clamp-3">
+        {L(project.description)}
+      </p>
+
+      {project.highlight && (
+        <p className="from-accent to-violet mt-3 inline-flex self-start rounded-full bg-gradient-to-r px-3 py-1 text-[11px] font-bold text-slate-950">
+          ★ {L(project.highlight)}
         </p>
+      )}
 
-        {project.highlight && (
-          <p className="from-accent to-violet mt-3 inline-flex self-start rounded-full bg-gradient-to-r px-3 py-1 text-[11px] font-bold text-slate-950">
-            ★ {L(project.highlight)}
-          </p>
-        )}
-
-        <div className="border-line mt-4 border-t pt-3">
-          <ul className="mb-3 flex flex-wrap gap-1">
-            {project.stack.slice(0, 5).map((tech) => (
-              <li
-                key={tech}
-                className="rounded bg-white/[0.04] px-1.5 py-0.5 font-mono text-[10px] text-accent"
-              >
-                {tech}
-              </li>
-            ))}
-            {project.stack.length > 5 && (
-              <li className="rounded bg-white/[0.04] px-1.5 py-0.5 font-mono text-[10px] text-mist">
-                +{project.stack.length - 5}
-              </li>
-            )}
-          </ul>
-          <ProjectLinks project={project} />
-        </div>
-      </article>
-    </Reveal>
+      <div className="border-line mt-4 border-t pt-3">
+        <ul className="mb-3 flex flex-wrap gap-1">
+          {project.stack.slice(0, 5).map((tech) => (
+            <li
+              key={tech}
+              className="rounded bg-white/[0.04] px-1.5 py-0.5 font-mono text-[10px] text-accent"
+            >
+              {tech}
+            </li>
+          ))}
+          {project.stack.length > 5 && (
+            <li className="rounded bg-white/[0.04] px-1.5 py-0.5 font-mono text-[10px] text-mist">
+              +{project.stack.length - 5}
+            </li>
+          )}
+        </ul>
+        <ProjectLinks project={project} />
+      </div>
+    </article>
   )
 }
 
 export default function Projects() {
   const { t, L } = useI18n()
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const isDragging = useRef(false)
+  const startX = useRef(0)
+  const scrollLeft = useRef(0)
+
   const featured = profile.projects.slice(0, 6)
   const scrollable = profile.projects.slice(6)
+
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    if (!scrollRef.current) return
+    isDragging.current = true
+    startX.current = e.pageX - scrollRef.current.offsetLeft
+    scrollLeft.current = scrollRef.current.scrollLeft
+    scrollRef.current.style.cursor = 'grabbing'
+  }, [])
+
+  const handleMouseUp = useCallback(() => {
+    isDragging.current = false
+    if (scrollRef.current) scrollRef.current.style.cursor = 'grab'
+  }, [])
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!isDragging.current || !scrollRef.current) return
+    e.preventDefault()
+    const x = e.pageX - scrollRef.current.offsetLeft
+    const walk = (x - startX.current) * 1.5
+    scrollRef.current.scrollLeft = scrollLeft.current - walk
+  }, [])
+
+  const scrollBy = useCallback((direction: 'left' | 'right') => {
+    if (!scrollRef.current) return
+    const amount = direction === 'left' ? -400 : 400
+    scrollRef.current.scrollBy({ left: amount, behavior: 'smooth' })
+  }, [])
 
   return (
     <section id="projects" className="relative py-28">
@@ -171,43 +202,70 @@ export default function Projects() {
             <FeaturedCard key={project.id} project={project} delay={(i % 3) * 120} />
           ))}
         </div>
-
-        {/* ── More Projects (horizontal scroll) ──────────── */}
-        {scrollable.length > 0 && (
-          <Reveal delay={200}>
-            <div className="mt-14">
-              <div className="mb-6 flex items-center gap-3">
-                <div className="from-accent h-px flex-1 bg-gradient-to-r to-transparent" />
-                <p className="font-display text-sm font-medium tracking-wider text-mist">
-                  {L({ en: 'More Projects', fr: 'Plus de projets' })}
-                </p>
-                <ArrowRightIcon />
-                <div className="from-accent h-px flex-1 bg-gradient-to-l to-transparent" />
-              </div>
-
-              <div
-                className="flex gap-5 overflow-x-auto pb-4 scrollbar-thin"
-                style={{
-                  scrollSnapType: 'x mandatory',
-                  WebkitOverflowScrolling: 'touch',
-                }}
-              >
-                {scrollable.map((project, i) => (
-                  <div key={project.id} style={{ scrollSnapAlign: 'start' }}>
-                    <ScrollCard project={project} delay={i * 100} />
-                  </div>
-                ))}
-              </div>
-
-              {/* Fade edges */}
-              <div className="pointer-events-none relative -mt-[calc(100%-16px)] flex h-0 w-full justify-between">
-                <div className="pointer-events-none h-48 w-16 bg-gradient-to-r from-void to-transparent" />
-                <div className="pointer-events-none h-48 w-16 bg-gradient-to-l from-void to-transparent" />
-              </div>
-            </div>
-          </Reveal>
-        )}
       </div>
+
+      {/* ── Horizontal Carousel (full-bleed) ─────────────── */}
+      {scrollable.length > 0 && (
+        <Reveal delay={200}>
+          <div className="relative mt-16">
+            {/* Gradient fade left */}
+            <div className="from-void pointer-events-none absolute top-0 left-0 z-10 h-full w-20 bg-gradient-to-r to-transparent" />
+
+            {/* Gradient fade right */}
+            <div className="from-void pointer-events-none absolute top-0 right-0 z-10 h-full w-20 bg-gradient-to-l to-transparent" />
+
+            {/* Scroll arrows */}
+            <button
+              type="button"
+              onClick={() => scrollBy('left')}
+              aria-label={L({ en: 'Scroll left', fr: 'Défiler à gauche' })}
+              className="border-line bg-panel/80 hover:bg-accent/20 pointer-events-auto absolute top-1/2 left-4 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border backdrop-blur-sm transition-all duration-200 hover:border-accent/50"
+            >
+              <ChevronRight className="rotate-180" />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollBy('right')}
+              aria-label={L({ en: 'Scroll right', fr: 'Défiler à droite' })}
+              className="border-line bg-panel/80 hover:bg-accent/20 pointer-events-auto absolute top-1/2 right-4 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border backdrop-blur-sm transition-all duration-200 hover:border-accent/50"
+            >
+              <ChevronRight />
+            </button>
+
+            {/* Scrollable track */}
+            <div
+              ref={scrollRef}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+              onMouseMove={handleMouseMove}
+              className="flex gap-6 overflow-x-auto px-20 py-2"
+              style={{
+                scrollSnapType: 'x mandatory',
+                scrollBehavior: 'smooth',
+                cursor: 'grab',
+                WebkitOverflowScrolling: 'touch',
+              }}
+            >
+              {scrollable.map((project) => (
+                <div key={project.id} style={{ scrollSnapAlign: 'start' }} className="shrink-0">
+                  <CarouselCard project={project} />
+                </div>
+              ))}
+            </div>
+
+            {/* Subtle scroll hint dots */}
+            <div className="mt-5 flex justify-center gap-2">
+              {scrollable.map((_, i) => (
+                <span
+                  key={i}
+                  className="h-1.5 w-1.5 rounded-full bg-white/20"
+                />
+              ))}
+            </div>
+          </div>
+        </Reveal>
+      )}
     </section>
   )
 }
