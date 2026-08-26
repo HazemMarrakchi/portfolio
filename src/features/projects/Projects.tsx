@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react'
+import { useRef, useCallback, useState, useEffect } from 'react'
 import { useI18n } from '../../core/i18n'
 import { profile } from '../../data/profile'
 import { Reveal, SectionHeading } from '../../components/ui'
@@ -23,9 +23,17 @@ function GitHubIcon() {
   )
 }
 
-function ChevronRight({ className = '' }: { className?: string }) {
+function ChevronLeft() {
   return (
-    <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" className={`h-5 w-5 ${className}`}>
+    <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" className="h-5 w-5">
+      <path fillRule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clipRule="evenodd" />
+    </svg>
+  )
+}
+
+function ChevronRight() {
+  return (
+    <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" className="h-5 w-5">
       <path fillRule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clipRule="evenodd" />
     </svg>
   )
@@ -63,60 +71,18 @@ function ProjectLinks({ project }: { project: typeof profile.projects[number] })
   )
 }
 
-function FeaturedCard({ project, delay }: { project: typeof profile.projects[number]; delay: number }) {
-  const { t, L } = useI18n()
-  return (
-    <Reveal delay={delay}>
-      <article className="glass group hover:glow-ring flex h-full flex-col rounded-3xl p-7 transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/50">
-        <div className="mb-4 flex items-center gap-3">
-          <span className="text-accent flex h-8 w-8 items-center justify-center rounded-lg bg-accent/10 text-sm font-bold">
-            {profile.projects.indexOf(project) + 1}
-          </span>
-          <span className="text-violet text-xs font-semibold tracking-wider uppercase">
-            {L(project.kind)}
-          </span>
-        </div>
-        <h3 className="font-display group-hover:text-accent text-xl leading-snug font-bold text-frost transition-colors duration-300">
-          {project.name}
-        </h3>
-        <p className="text-mist mt-3 flex-1 text-sm leading-relaxed">
-          {L(project.description)}
-        </p>
-
-        {project.highlight && (
-          <p className="from-accent to-violet mt-4 inline-flex self-start rounded-full bg-gradient-to-r px-3.5 py-1.5 text-xs font-bold text-slate-950">
-            ★ {L(project.highlight)}
-          </p>
-        )}
-
-        <div className="border-line mt-5 border-t pt-4">
-          <p className="text-mist mb-2 text-[11px] font-semibold tracking-wider uppercase">
-            {t.projects.stack}
-          </p>
-          <ul className="flex flex-wrap gap-1.5">
-            {project.stack.map((tech) => (
-              <li
-                key={tech}
-                className="rounded-md bg-white/[0.04] px-2 py-1 font-mono text-[11px] text-accent"
-              >
-                {tech}
-              </li>
-            ))}
-          </ul>
-          <ProjectLinks project={project} />
-        </div>
-      </article>
-    </Reveal>
-  )
-}
-
-function CarouselCard({ project }: { project: typeof profile.projects[number] }) {
+function ProjectCard({ project, index }: { project: typeof profile.projects[number]; index: number }) {
   const { L } = useI18n()
   return (
-    <article className="glass group hover:glow-ring flex h-full w-[380px] min-w-[380px] flex-col rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/50">
-      <span className="text-violet mb-3 text-xs font-semibold tracking-wider uppercase">
-        {L(project.kind)}
-      </span>
+    <article className="glass group hover:glow-ring flex h-full w-full flex-col rounded-3xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:border-accent/50">
+      <div className="mb-3 flex items-center gap-3">
+        <span className="text-accent flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-sm font-bold">
+          {index + 1}
+        </span>
+        <span className="text-violet truncate text-xs font-semibold tracking-wider uppercase">
+          {L(project.kind)}
+        </span>
+      </div>
       <h3 className="font-display group-hover:text-accent text-lg leading-snug font-bold text-frost transition-colors duration-300">
         {project.name}
       </h3>
@@ -157,16 +123,42 @@ export default function Projects() {
   const scrollRef = useRef<HTMLDivElement>(null)
   const isDragging = useRef(false)
   const startX = useRef(0)
-  const scrollLeft = useRef(0)
+  const scrollLeftPos = useRef(0)
+  const [activePage, setActivePage] = useState(0)
 
-  const featured = profile.projects.slice(0, 6)
-  const scrollable = profile.projects.slice(6)
+  const projects = profile.projects
+  const CARD_WIDTH = 380
+  const GAP = 24
+  const PAGE_SIZE = 6
+
+  const totalPages = Math.ceil(projects.length / PAGE_SIZE)
+
+  const scrollToPage = useCallback((page: number) => {
+    if (!scrollRef.current) return
+    const clamped = Math.max(0, Math.min(page, totalPages - 1))
+    setActivePage(clamped)
+    scrollRef.current.scrollTo({
+      left: clamped * PAGE_SIZE * (CARD_WIDTH + GAP),
+      behavior: 'smooth',
+    })
+  }, [totalPages])
+
+  useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+    const onScroll = () => {
+      const page = Math.round(el.scrollLeft / (PAGE_SIZE * (CARD_WIDTH + GAP)))
+      setActivePage(Math.max(0, Math.min(page, totalPages - 1)))
+    }
+    el.addEventListener('scroll', onScroll, { passive: true })
+    return () => el.removeEventListener('scroll', onScroll)
+  }, [totalPages])
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     if (!scrollRef.current) return
     isDragging.current = true
     startX.current = e.pageX - scrollRef.current.offsetLeft
-    scrollLeft.current = scrollRef.current.scrollLeft
+    scrollLeftPos.current = scrollRef.current.scrollLeft
     scrollRef.current.style.cursor = 'grabbing'
   }, [])
 
@@ -180,13 +172,7 @@ export default function Projects() {
     e.preventDefault()
     const x = e.pageX - scrollRef.current.offsetLeft
     const walk = (x - startX.current) * 1.5
-    scrollRef.current.scrollLeft = scrollLeft.current - walk
-  }, [])
-
-  const scrollBy = useCallback((direction: 'left' | 'right') => {
-    if (!scrollRef.current) return
-    const amount = direction === 'left' ? -400 : 400
-    scrollRef.current.scrollBy({ left: amount, behavior: 'smooth' })
+    scrollRef.current.scrollLeft = scrollLeftPos.current - walk
   }, [])
 
   return (
@@ -195,77 +181,82 @@ export default function Projects() {
         <Reveal>
           <SectionHeading index="03" title={t.projects.title} subtitle={t.projects.subtitle} />
         </Reveal>
-
-        {/* ── Featured Grid ─────────────────────────────────── */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {featured.map((project, i) => (
-            <FeaturedCard key={project.id} project={project} delay={(i % 3) * 120} />
-          ))}
-        </div>
       </div>
 
-      {/* ── Horizontal Carousel (full-bleed) ─────────────── */}
-      {scrollable.length > 0 && (
-        <Reveal delay={200}>
-          <div className="relative mt-16">
-            {/* Gradient fade left */}
-            <div className="from-void pointer-events-none absolute top-0 left-0 z-10 h-full w-20 bg-gradient-to-r to-transparent" />
+      {/* ── Carousel (full-bleed) ─────────────────────── */}
+      <Reveal delay={120}>
+        <div className="relative mt-10">
+          {/* Gradient fades */}
+          <div className="from-void pointer-events-none absolute top-0 left-0 z-10 h-full w-16 bg-gradient-to-r to-transparent md:w-24" />
+          <div className="from-void pointer-events-none absolute top-0 right-0 z-10 h-full w-16 bg-gradient-to-l to-transparent md:w-24" />
 
-            {/* Gradient fade right */}
-            <div className="from-void pointer-events-none absolute top-0 right-0 z-10 h-full w-20 bg-gradient-to-l to-transparent" />
-
-            {/* Scroll arrows */}
+          {/* Nav arrows */}
+          {activePage > 0 && (
             <button
               type="button"
-              onClick={() => scrollBy('left')}
-              aria-label={L({ en: 'Scroll left', fr: 'Défiler à gauche' })}
-              className="border-line bg-panel/80 hover:bg-accent/20 pointer-events-auto absolute top-1/2 left-4 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border backdrop-blur-sm transition-all duration-200 hover:border-accent/50"
+              onClick={() => scrollToPage(activePage - 1)}
+              aria-label={L({ en: 'Previous projects', fr: 'Projets précédents' })}
+              className="border-line bg-panel/80 hover:bg-accent/20 pointer-events-auto absolute top-1/2 left-3 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border backdrop-blur-sm transition-all duration-200 hover:border-accent/50 md:left-6"
             >
-              <ChevronRight className="rotate-180" />
+              <ChevronLeft />
             </button>
+          )}
+          {activePage < totalPages - 1 && (
             <button
               type="button"
-              onClick={() => scrollBy('right')}
-              aria-label={L({ en: 'Scroll right', fr: 'Défiler à droite' })}
-              className="border-line bg-panel/80 hover:bg-accent/20 pointer-events-auto absolute top-1/2 right-4 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border backdrop-blur-sm transition-all duration-200 hover:border-accent/50"
+              onClick={() => scrollToPage(activePage + 1)}
+              aria-label={L({ en: 'Next projects', fr: 'Projets suivants' })}
+              className="border-line bg-panel/80 hover:bg-accent/20 pointer-events-auto absolute top-1/2 right-3 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border backdrop-blur-sm transition-all duration-200 hover:border-accent/50 md:right-6"
             >
               <ChevronRight />
             </button>
+          )}
 
-            {/* Scrollable track */}
-            <div
-              ref={scrollRef}
-              onMouseDown={handleMouseDown}
-              onMouseUp={handleMouseUp}
-              onMouseLeave={handleMouseUp}
-              onMouseMove={handleMouseMove}
-              className="flex gap-6 overflow-x-auto px-20 py-2"
-              style={{
-                scrollSnapType: 'x mandatory',
-                scrollBehavior: 'smooth',
-                cursor: 'grab',
-                WebkitOverflowScrolling: 'touch',
-              }}
-            >
-              {scrollable.map((project) => (
-                <div key={project.id} style={{ scrollSnapAlign: 'start' }} className="shrink-0">
-                  <CarouselCard project={project} />
-                </div>
-              ))}
-            </div>
+          {/* Scrollable track */}
+          <div
+            ref={scrollRef}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            onMouseMove={handleMouseMove}
+            className="flex gap-6 overflow-x-auto px-6 py-2 md:px-24"
+            style={{
+              scrollSnapType: 'x mandatory',
+              scrollBehavior: 'smooth',
+              cursor: 'grab',
+              WebkitOverflowScrolling: 'touch',
+            }}
+          >
+            {projects.map((project, i) => (
+              <div
+                key={project.id}
+                className="w-[calc((100vw-12rem)/3-1rem)] min-w-[280px] shrink-0 snap-start md:w-[calc((min(100vw,72rem)-12rem)/3-1rem)]"
+              >
+                <ProjectCard project={project} index={i} />
+              </div>
+            ))}
+          </div>
 
-            {/* Subtle scroll hint dots */}
-            <div className="mt-5 flex justify-center gap-2">
-              {scrollable.map((_, i) => (
-                <span
+          {/* Page dots */}
+          {totalPages > 1 && (
+            <div className="mt-6 flex justify-center gap-2">
+              {Array.from({ length: totalPages }).map((_, i) => (
+                <button
                   key={i}
-                  className="h-1.5 w-1.5 rounded-full bg-white/20"
+                  type="button"
+                  onClick={() => scrollToPage(i)}
+                  aria-label={`${L({ en: 'Page', fr: 'Page' })} ${i + 1}`}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    i === activePage
+                      ? 'w-8 bg-accent'
+                      : 'w-2 bg-white/20 hover:bg-white/40'
+                  }`}
                 />
               ))}
             </div>
-          </div>
-        </Reveal>
-      )}
+          )}
+        </div>
+      </Reveal>
     </section>
   )
 }
