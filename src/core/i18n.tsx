@@ -16,7 +16,6 @@ const en = {
     available: 'Open to new opportunities',
     viewProjects: 'View my projects',
     contactMe: 'Get in touch',
-    downloadCv: 'Download CV',
     scroll: 'Scroll to explore',
   },
   about: {
@@ -66,7 +65,6 @@ const fr: typeof en = {
     available: 'Ouvert aux opportunités',
     viewProjects: 'Voir mes projets',
     contactMe: 'Me contacter',
-    downloadCv: 'Télécharger le CV',
     scroll: 'Faites défiler pour explorer',
   },
   about: {
