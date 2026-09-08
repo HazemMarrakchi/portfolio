@@ -79,6 +79,14 @@ export default function Navbar() {
             ))}
           </div>
 
+          <a
+            href={`./CV_Hazem_Marrakchi_${lang === 'fr' ? 'FR' : 'EN'}.pdf`}
+            download
+            className="glass font-display hover:border-accent/60 hidden rounded-full px-4 py-1.5 text-xs font-semibold text-frost transition-colors duration-300 md:inline-flex"
+          >
+            ↓ CV
+          </a>
+
           <button
             type="button"
             aria-label="Menu"
