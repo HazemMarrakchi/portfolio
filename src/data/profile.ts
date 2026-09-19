@@ -108,6 +108,7 @@ export const profile = {
         fr: '1M+ entités par tick · propagation de crise cross-domain · replay déterministe',
       },
       link: 'https://github.com/HazemMarrakchi/Gaia',
+      demo: 'https://hazemmarrakchi.github.io/Gaia/',
     },
     {
       id: 'telemetryhub',
