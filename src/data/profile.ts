@@ -42,8 +42,8 @@ export const profile = {
   role: { en: 'Software Engineer', fr: 'Ingénieur en Génie Logiciel' },
   tagline: { en: 'Full Stack Developer', fr: 'Développeur Full Stack' },
   heroPitch: {
-    en: 'I design and build modern full stack web platforms — and wire them to intelligence.',
-    fr: "Je conçois et développe des plateformes web full stack modernes — connectées à l'intelligence artificielle.",
+    en: 'I build production-grade full stack platforms — from distributed simulation engines to AI-powered SaaS — and ship them end to end.',
+    fr: "Je construis des plateformes full stack de niveau production — des moteurs de simulation distribués aux SaaS augmentés par l'IA — et je les livre de bout en bout.",
   },
   about: [
     {
@@ -51,8 +51,8 @@ export const profile = {
       fr: "Diplômé en Génie Logiciel de l'ESSAT Gabès (programme accrédité EUR-ACE®), je suis spécialisé dans la conception et le développement d'applications web Full Stack modernes et l'intégration de solutions d'intelligence artificielle.",
     },
     {
-      en: 'My toolkit spans JavaScript/TypeScript (React, Angular, NestJS, Vite), Python (FastAPI, Scikit-learn) and Java (Spring Boot). I build production-grade platforms with multi-step form wizards, real-time APIs, Trilingual i18n (EN/FR/AR+RTL), E2E testing (Cypress/Playwright), CI/CD and containerized deployments.',
-      fr: "Ma boîte à outils couvre JavaScript/TypeScript (React, Angular, NestJS, Vite), Python (FastAPI, Scikit-learn) et Java (Spring Boot). Je construis des plateformes de production avec formulaires multi-étapes, APIs en temps réel, i18n trilingue (EN/FR/AR+RTL), tests E2E (Cypress/Playwright), CI/CD et déploiements conteneurisés.",
+      en: 'My recent work goes from distributed, event-driven platforms — a real-time planetary simulation streaming 1M+ entities through Kafka and Flink, a multi-tenant IoT supervision SaaS on 6 microservices — to AI-integrated products (risk prediction, RAG, anomaly detection). I build production-grade platforms with trilingual i18n (EN/FR/AR+RTL), E2E testing (Cypress/Playwright), CI/CD and containerized deployments on Docker, Kubernetes and Terraform.',
+      fr: "Mes réalisations récentes vont des plateformes distribuées événementielles — une simulation planétaire temps réel streamant 1M+ entités via Kafka et Flink, un SaaS IoT multi-tenant sur 6 microservices — aux produits augmentés par l'IA (prédiction de risque, RAG, détection d'anomalies). Je construis des plateformes de production avec i18n trilingue (EN/FR/AR+RTL), tests E2E (Cypress/Playwright), CI/CD et déploiements conteneurisés sur Docker, Kubernetes et Terraform.",
     },
   ] as Localized[],
   skillGroups: [
@@ -69,20 +69,24 @@ export const profile = {
       items: ['Node.js', 'NestJS', 'Express.js', 'Spring Boot', 'FastAPI', 'REST APIs', 'WebSockets', '.NET'],
     },
     {
+      label: { en: 'Streaming & Data', fr: 'Streaming & Données' },
+      items: ['Apache Kafka', 'Apache Flink', 'PostgreSQL · PostGIS', 'TimescaleDB', 'Redis'],
+    },
+    {
       label: { en: 'Databases & ORM', fr: 'Bases de données & ORM' },
       items: ['MongoDB', 'MySQL', 'Oracle Database', 'SQLite', 'Drizzle ORM', 'Zod'],
     },
     {
       label: { en: 'AI & Machine Learning', fr: 'IA & Machine Learning' },
-      items: ['Scikit-learn', 'Deep Learning'],
+      items: ['Scikit-learn', 'Deep Learning', 'RAG'],
     },
     {
       label: { en: 'Cloud & DevOps', fr: 'Cloud & DevOps' },
-      items: ['Docker', 'Microsoft Azure', 'Linux'],
+      items: ['Docker', 'Kubernetes', 'Helm', 'Terraform', 'Microsoft Azure', 'Linux'],
     },
     {
-      label: { en: 'Testing & Quality', fr: 'Tests & Qualité' },
-      items: ['Cypress E2E', 'Playwright E2E', 'CI/CD (GitHub Actions)', 'OpenAPI / Swagger'],
+      label: { en: 'Observability & Testing', fr: 'Observabilité & Tests' },
+      items: ['Prometheus', 'Grafana', 'Cypress E2E', 'Playwright E2E', 'CI/CD (GitHub & GitLab)', 'OpenAPI / Swagger'],
     },
     {
       label: { en: 'Tools & Methods', fr: 'Outils & Méthodes' },
@@ -90,6 +94,36 @@ export const profile = {
     },
   ],
   projects: [
+    {
+      id: 'gaia',
+      name: 'GAIA — The Living Planet Simulation',
+      kind: { en: 'Distributed Simulation Platform — 1M+ entities', fr: 'Plateforme de Simulation Distribuée — 1M+ entités' },
+      description: {
+        en: 'A real-time distributed simulation platform that models the world as a system of interacting domains — energy/climate, cities, transport and finance — where a crisis in one domain mechanically propagates to the others. Java 21 discrete-event engine simulating 1M+ entities per tick (~130 ticks/s), events streamed through Kafka, continuously aggregated by Apache Flink into PostGIS, and an AI service (FastAPI) forecasting, detecting anomalies and suggesting interventions operators validate in a what-if scenario engine with deterministic replay. Mission-control 3D globe (Angular 19 + Three.js) with day/night earth, live regional hot-spots and cross-domain crisis HUD, plus an observability stack: Prometheus, Grafana, Micrometer metrics. Packaged with Docker Compose, Helm charts and Terraform (Azure AKS), CI/CD on GitLab.',
+        fr: "Une plateforme de simulation distribuée temps réel modélisant le monde comme un système de domaines interconnectés — énergie/climat, villes, transport, finance — où une crise dans un domaine se propage mécaniquement aux autres. Moteur Java 21 à événements discrets simulant 1M+ entités par tick (~130 ticks/s), événements streamés via Kafka, agrégés en continu par Apache Flink dans PostGIS, et un service IA (FastAPI) qui prévoit, détecte les anomalies et suggère des interventions validables dans un moteur de scénarios what-if avec replay déterministe. Globe 3D mission-control (Angular 19 + Three.js) avec terre jour/nuit, hot-spots régionaux live et HUD de crise cross-domain, plus l'observabilité complète : Prometheus, Grafana, métriques Micrometer. Packagé avec Docker Compose, charts Helm et Terraform (Azure AKS), CI/CD GitLab.",
+      },
+      stack: ['Java 21', 'Spring Boot', 'Apache Kafka', 'Apache Flink', 'PostGIS', 'Angular 19', 'Three.js', 'FastAPI', 'Docker', 'Kubernetes · Helm', 'Terraform', 'GitLab CI'],
+      highlight: {
+        en: '1M+ entities per tick · cross-domain crisis propagation · deterministic replay',
+        fr: '1M+ entités par tick · propagation de crise cross-domain · replay déterministe',
+      },
+      link: 'https://github.com/HazemMarrakchi/Gaia',
+    },
+    {
+      id: 'telemetryhub',
+      name: 'TelemetryHub — Industrial IoT Supervision SaaS',
+      kind: { en: 'Multi-Tenant Microservices SaaS', fr: 'SaaS Multi-Tenant en Microservices' },
+      description: {
+        en: 'A multi-tenant SaaS for industrial IoT fleet supervision, architected as 6 Spring Boot microservices (gateway, auth, fleet, telemetry ingestion, alerting, reports) communicating through Kafka: device registry with JWT/OAuth2 per-tenant isolation, high-frequency telemetry ingestion into TimescaleDB hypertables, real-time rule-based alerting, PDF report generation and an Angular 18 operations console. An auxiliary FastAPI RAG service answers natural-language questions over fleet data. Shipped with Helm charts, Terraform, Prometheus/Grafana observability and full CI/CD.',
+        fr: "Un SaaS multi-tenant de supervision de flottes IoT industrielles, architecturé en 6 microservices Spring Boot (gateway, auth, flotte, ingestion télémétrie, alerting, rapports) communiquant via Kafka : registre d'appareils avec isolation par tenant JWT/OAuth2, ingestion haute fréquence dans des hypertables TimescaleDB, alerting temps réel sur règles, génération de rapports PDF et console d'opérations Angular 18. Un service FastAPI RAG auxiliaire répond aux questions en langage naturel sur les données de flotte. Livré avec charts Helm, Terraform, observabilité Prometheus/Grafana et CI/CD complet.",
+      },
+      stack: ['Spring Boot', 'Java 21', 'Apache Kafka', 'TimescaleDB', 'Angular 18', 'FastAPI', 'Redis', 'Docker', 'Kubernetes · Helm', 'Terraform', 'CI/CD'],
+      highlight: {
+        en: '6 microservices · multi-tenant isolation · time-series at scale',
+        fr: '6 microservices · isolation multi-tenant · séries temporelles à grande échelle',
+      },
+      link: 'https://github.com/HazemMarrakchi/telemetryhub',
+    },
     {
       id: 'facturia',
       name: 'Facturia — EU-Compliant E-Invoicing SaaS',

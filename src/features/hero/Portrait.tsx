@@ -3,10 +3,10 @@ import { logger } from '../../core/logger'
 import { profile } from '../../data/profile'
 
 const STACK_BADGES = [
-  { label: 'Angular', dot: 'bg-accent', position: 'top-8 -left-3 sm:-left-7', delay: '0s' },
-  { label: 'Node.js', dot: 'bg-violet', position: 'top-1/4 -right-3 sm:-right-7', delay: '1.4s' },
-  { label: 'FastAPI', dot: 'bg-violet', position: '-bottom-5 left-8 sm:left-12', delay: '0.7s' },
-  { label: 'MongoDB', dot: 'bg-accent', position: 'bottom-24 -right-4 sm:-right-9', delay: '2.1s' },
+  { label: 'React 19', dot: 'bg-accent', position: 'top-8 -left-3 sm:-left-7', delay: '0s' },
+  { label: 'Spring Boot', dot: 'bg-violet', position: 'top-1/4 -right-3 sm:-right-7', delay: '1.4s' },
+  { label: 'Kafka', dot: 'bg-violet', position: '-bottom-5 left-8 sm:left-12', delay: '0.7s' },
+  { label: 'Kubernetes', dot: 'bg-accent', position: 'bottom-24 -right-4 sm:-right-9', delay: '2.1s' },
 ]
 
 export default function Portrait() {
