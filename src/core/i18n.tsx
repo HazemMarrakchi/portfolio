@@ -13,14 +13,12 @@ const en = {
     contact: 'Contact',
   },
   hero: {
-  hero: {
     available: 'Open to new opportunities',
     viewProjects: 'View my projects',
     viewLiveDemo: 'Launch live demo',
     contactMe: 'Get in touch',
     downloadCV: 'Download CV',
     scroll: 'Scroll to explore',
-  },
   },
   about: {
     title: 'About me',
