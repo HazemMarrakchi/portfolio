@@ -115,15 +115,16 @@ export const profile = {
       name: 'TelemetryHub — Industrial IoT Supervision SaaS',
       kind: { en: 'Multi-Tenant Microservices SaaS', fr: 'SaaS Multi-Tenant en Microservices' },
       description: {
-        en: 'A multi-tenant SaaS for industrial IoT fleet supervision, architected as 6 Spring Boot microservices (gateway, auth, fleet, telemetry ingestion, alerting, reports) communicating through Kafka: device registry with JWT/OAuth2 per-tenant isolation, high-frequency telemetry ingestion into TimescaleDB hypertables, real-time rule-based alerting, PDF report generation and an Angular 18 operations console. An auxiliary FastAPI RAG service answers natural-language questions over fleet data. Shipped with Helm charts, Terraform, Prometheus/Grafana observability and full CI/CD.',
-        fr: "Un SaaS multi-tenant de supervision de flottes IoT industrielles, architecturé en 6 microservices Spring Boot (gateway, auth, flotte, ingestion télémétrie, alerting, rapports) communiquant via Kafka : registre d'appareils avec isolation par tenant JWT/OAuth2, ingestion haute fréquence dans des hypertables TimescaleDB, alerting temps réel sur règles, génération de rapports PDF et console d'opérations Angular 18. Un service FastAPI RAG auxiliaire répond aux questions en langage naturel sur les données de flotte. Livré avec charts Helm, Terraform, observabilité Prometheus/Grafana et CI/CD complet.",
+        en: 'A multi-tenant SaaS for industrial IoT fleet supervision, architected as 7 Spring Boot microservices (gateway, auth, fleet, telemetry ingestion, alerting, reports, maintenance) communicating through Kafka: device registry with JWT/OAuth2 per-tenant isolation, high-frequency telemetry ingestion into TimescaleDB hypertables, real-time rule-based alerting, OEE/availability tracking, PDF report generation and an Angular 18 operations console with NgRx. An auxiliary FastAPI RAG service answers natural-language questions over fleet data with Z-Score anomaly detection. Full observability: Prometheus, Grafana, Loki. CI/CD on GitHub Actions, Docker, Kubernetes (Helm), Terraform (GCP).',
+        fr: "Un SaaS multi-tenant de supervision IoT industrielle en 7 microservices Spring Boot (gateway, auth, fleet, ingestion, alerting, rapports, maintenance) via Kafka : registre d'appareils JWT/OAuth2 par tenant, ingestion haute fréquence dans TimescaleDB, alerting temps réel sur règles, suivi OEE/availability, génération de rapports PDF et console Angular 18 avec NgRx. Service FastAPI RAG avec détection d'anomalies Z-Score. Observabilité Prometheus/Grafana/Loki. CI/CD GitHub Actions, Docker, Kubernetes (Helm), Terraform (GCP).",
       },
-      stack: ['Spring Boot', 'Java 21', 'Apache Kafka', 'TimescaleDB', 'Angular 18', 'FastAPI', 'Redis', 'Docker', 'Kubernetes · Helm', 'Terraform', 'CI/CD'],
+      stack: ['Java 21', 'Spring Boot', 'Apache Kafka', 'TimescaleDB', 'PostgreSQL', 'Angular 18', 'NgRx', 'FastAPI', 'Docker', 'Kubernetes · Helm', 'Terraform', 'GitHub Actions', 'Prometheus', 'Grafana'],
       highlight: {
-        en: '6 microservices · multi-tenant isolation · time-series at scale',
-        fr: '6 microservices · isolation multi-tenant · séries temporelles à grande échelle',
+        en: '7 microservices · Kafka event-driven · NgRx · Full test suite · CI/CD',
+        fr: '7 microservices · Event-driven Kafka · NgRx · Suite de tests complète · CI/CD',
       },
       link: 'https://github.com/HazemMarrakchi/telemetryhub',
+      demo: 'https://telemetryhub-frontend.vercel.app/',
     },
     {
       id: 'facturia',
