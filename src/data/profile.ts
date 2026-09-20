@@ -124,7 +124,7 @@ export const profile = {
         fr: '7 microservices · Event-driven Kafka · NgRx · Suite de tests complète · CI/CD',
       },
       link: 'https://github.com/HazemMarrakchi/telemetryhub',
-      demo: 'https://telemetryhub-frontend.vercel.app/',
+      demo: 'https://hazemmarrakchi.github.io/telemetryhub/',
     },
     {
       id: 'facturia',
