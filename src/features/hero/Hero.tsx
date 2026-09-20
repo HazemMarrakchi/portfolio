@@ -44,14 +44,6 @@ export default function Hero() {
               ↓ {t.hero.downloadCV}
             </a>
             <a
-              href="https://hazemmarrakchi.github.io/Gaia/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="from-accent to-violet shadow-accent/25 font-display rounded-full bg-gradient-to-r px-7 py-3.5 text-sm font-semibold text-slate-950 shadow-lg transition-transform duration-300 hover:scale-105 hover:opacity-90"
-            >
-              🚀 {t.hero.viewLiveDemo}
-            </a>
-            <a
               href={profile.github}
               target="_blank"
               rel="noopener noreferrer"

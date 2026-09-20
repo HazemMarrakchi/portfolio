@@ -15,7 +15,6 @@ const en = {
   hero: {
     available: 'Open to new opportunities',
     viewProjects: 'View my projects',
-    viewLiveDemo: 'Launch live demo',
     contactMe: 'Get in touch',
     downloadCV: 'Download CV',
     scroll: 'Scroll to explore',
@@ -66,7 +65,6 @@ const fr: typeof en = {
   hero: {
     available: 'Ouvert aux opportunités',
     viewProjects: 'Voir mes projets',
-    viewLiveDemo: 'Lancer la démo live',
     contactMe: 'Me contacter',
     downloadCV: 'Télécharger CV',
     scroll: 'Faites défiler pour explorer',
