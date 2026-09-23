@@ -63,11 +63,11 @@ export const profile = {
     },
     {
       label: { en: 'Frontend', fr: 'Frontend' },
-      items: ['React', 'Angular', 'Three.js', 'Tailwind CSS v4', 'Bootstrap', 'HTML5 / CSS3'],
+      items: ['React', 'Angular', 'Three.js', 'Tailwind CSS v4', 'Bootstrap', 'HTML5 / CSS3', 'PWA / Service Worker', 'Web Push', 'MapLibre GL'],
     },
     {
       label: { en: 'Backend & APIs', fr: 'Backend & APIs' },
-      items: ['Node.js', 'NestJS', 'Express.js', 'Spring Boot', 'FastAPI', 'REST APIs', 'WebSockets', '.NET'],
+      items: ['Node.js', 'NestJS', 'Express.js', 'Spring Boot', 'FastAPI', 'Supabase (Auth · RLS · Realtime)', 'Edge Functions (Deno)', 'REST APIs', 'WebSockets', '.NET'],
     },
     {
       label: { en: 'Streaming & Data', fr: 'Streaming & Données' },
@@ -79,7 +79,7 @@ export const profile = {
     },
     {
       label: { en: 'AI & Machine Learning', fr: 'IA & Machine Learning' },
-      items: ['Scikit-learn', 'Deep Learning', 'RAG'],
+      items: ['Scikit-learn', 'Deep Learning', 'RAG', 'Time-Series Forecasting'],
     },
     {
       label: { en: 'Cloud & DevOps', fr: 'Cloud & DevOps' },
@@ -87,7 +87,7 @@ export const profile = {
     },
     {
       label: { en: 'Observability & Testing', fr: 'Observabilité & Tests' },
-      items: ['Prometheus', 'Grafana', 'Cypress E2E', 'Playwright E2E', 'CI/CD (GitHub & GitLab)', 'OpenAPI / Swagger'],
+      items: ['Prometheus', 'Grafana', 'Cypress E2E', 'Playwright E2E', 'Jasmine / Karma', 'CI/CD (GitHub & GitLab)', 'OpenAPI / Swagger'],
     },
     {
       label: { en: 'Tools & Methods', fr: 'Outils & Méthodes' },
