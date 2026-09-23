@@ -58,6 +58,11 @@ function ProjectCard({ project, index }: { project: typeof profile.projects[numb
         <span className="text-violet truncate text-xs font-semibold tracking-wider uppercase">
           {L(project.kind)}
         </span>
+        {project.status && (
+          <span className="ml-auto shrink-0 rounded-full border border-amber-400/40 bg-amber-400/10 px-2.5 py-0.5 text-[10px] font-semibold tracking-wide text-amber-300 uppercase">
+            {L(project.status)}
+          </span>
+        )}
       </div>
       <h3 className="font-display group-hover:text-accent text-base sm:text-lg leading-snug font-bold text-frost transition-colors duration-300">
         {project.name}

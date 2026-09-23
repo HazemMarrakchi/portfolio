@@ -10,6 +10,7 @@ export interface Project {
   description: Localized
   stack: string[]
   highlight?: Localized
+  status?: Localized
   link?: string
   demo?: string
 }
@@ -95,6 +96,23 @@ export const profile = {
   ],
   projects: [
     {
+      id: 'jarra',
+      name: 'JARRA — Anti-Food-Waste Marketplace',
+      kind: { en: 'Social Impact Platform — Gabès, Tunisia', fr: 'Plateforme à Impact Social — Gabès, Tunisie' },
+      status: { en: '🚧 In active development', fr: '🚧 En développement actif' },
+      description: {
+        en: 'Real-time anti-food-waste marketplace born in Gabès: merchants publish day-end surplus in 30 seconds (surprise baskets at −50–70%), citizens see live baskets on a custom MapLibre map of the city (Médina, Chott Salem, Teboulbou…), reserve in 2 clicks via atomic PostgreSQL RPC (no double-booking) and collect with a QR code. Phone OTP auth with global access lock, Web Push alerts, merchant dashboard with AI prediction of unsold items, public Impact page with live counters (meals saved, kg CO₂ avoided, TND recovered) and open-data CSV export. Supabase backend (RLS, realtime), admin cockpit, installable Angular 19 PWA with offline shell.',
+        fr: "Marketplace anti-gaspillage alimentaire temps réel née à Gabès : les commerçants publient leurs invendus en 30 s (paniers surprise à −50–70 %), les citoyens voient les paniers en direct sur une carte MapLibre custom de la ville (Médina, Chott Salem, Teboulbou…), réservent en 2 clics via RPC PostgreSQL atomique (anti double-booking) et récupèrent avec un QR code. Auth OTP par SMS avec verrou d'accès global, alertes Web Push, dashboard commerçant avec prédiction IA des invendus, page Impact publique avec compteurs live (repas sauvés, kg de CO₂ évités, TND réinjectés) et export open-data CSV. Backend Supabase (RLS, temps réel), cockpit admin, PWA Angular 19 installable avec mode hors-ligne.",
+      },
+      stack: ['Angular 19', 'TypeScript', 'Supabase (PostgreSQL, RLS, Realtime)', 'MapLibre GL', 'PWA / Service Worker', 'Web Push'],
+      highlight: {
+        en: 'OTP-secured marketplace with atomic reservations and real-time stock — fighting food waste in Gabès',
+        fr: 'Marketplace sécurisée par OTP avec réservations atomiques et stock temps réel — contre le gaspillage alimentaire à Gabès',
+      },
+      link: 'https://github.com/HazemMarrakchi/jarra',
+      demo: 'https://hazemmarrakchi.github.io/jarra/',
+    },
+    {
       id: 'gaia',
       name: 'GAIA — The Living Planet Simulation',
       kind: { en: 'Distributed Simulation Platform — 1M+ entities', fr: 'Plateforme de Simulation Distribuée — 1M+ entités' },
@@ -157,22 +175,6 @@ export const profile = {
       },
       link: 'https://github.com/HazemMarrakchi/einvoice-studio',
       demo: 'https://hazemmarrakchi.github.io/einvoice-studio/',
-    },
-    {
-      id: 'jarra',
-      name: 'JARRA — Anti-Food-Waste Marketplace',
-      kind: { en: 'Social Impact Platform — Gabès, Tunisia', fr: 'Plateforme à Impact Social — Gabès, Tunisie' },
-      description: {
-        en: 'A real-time anti-food-waste marketplace born in Gabès: merchants publish their day-end surplus in 30 seconds (surprise baskets at −50–70%), citizens see available baskets live on the city map, reserve in 2 clicks and collect with a unique code. Custom vector map of Gabès (Medina, Chott Salem, Teboulbou, Cheniki, Menzel…), merchant dashboard with AI prediction of tomorrow\'s unsold items (seasonal moving averages), public Impact page with live counters (meals saved, kg of CO₂ avoided, TND recovered) and street-level impact tracking. The demo runs 100% in the browser on a deterministic simulation engine; the real backend (PostgreSQL, RLS, transactional RPCs, realtime) is delivered ready for Supabase. Mobile-first PWA, Angular 19, CI/CD GitHub Actions → GitHub Pages.',
-        fr: "Une marketplace anti-gaspillage alimentaire temps réel née à Gabès : les commerçants publient leurs invendus en 30 secondes (paniers surprise à −50–70 %), les citoyens voient les paniers disponibles en live sur la carte de la ville, réservent en 2 clics et récupèrent avec un code unique. Carte vectorielle custom de Gabès (Médina, Chott Salem, Teboulbou, Cheniki, Menzel…), dashboard commerçant avec prédiction IA des invendus du lendemain (moyennes glissantes saisonnières), page Impact publique avec compteurs live (repas sauvés, kg de CO₂ évités, TND réinjectés) et suivi de l'impact par quartier. La démo tourne 100 % dans le navigateur sur un moteur de simulation déterministe ; le backend réel (PostgreSQL, RLS, RPC transactionnelles, temps réel) est livré prêt pour Supabase. PWA mobile-first, Angular 19, CI/CD GitHub Actions → GitHub Pages.",
-      },
-      stack: ['Angular 19', 'TypeScript', 'Supabase', 'PostgreSQL', 'Python', 'PWA', 'GitHub Actions'],
-      highlight: {
-        en: 'In development — not finished yet',
-        fr: 'En cours de développement — pas encore terminé',
-      },
-      link: 'https://github.com/HazemMarrakchi/jarra',
-      demo: 'https://hazemmarrakchi.github.io/jarra/',
     },
     {
       id: 'dhahabi-loan-platform',
